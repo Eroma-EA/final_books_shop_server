@@ -6,6 +6,7 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
+import {IUser} from "../intefaces/IUser";
 
 interface UserCreationAttrs {
     email: string;
@@ -13,7 +14,7 @@ interface UserCreationAttrs {
 }
 
 @Table({ tableName: "users" })
-export class UserModel extends Model {
+export class UserModel extends Model <IUser, UserCreationAttrs>{
     @Column({
         type: DataType.INTEGER,
         unique: true,

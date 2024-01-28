@@ -1,16 +1,20 @@
 import {Request, Response} from "express";
 import {UserService} from "../services/user.service";
+import {IUser} from "../intefaces/IUser";
 
  class UserController {
-     private userService;
+     private userService:UserService;
 
     constructor() {
         this.userService = new UserService();
+        this.getAll = this.getAll.bind(this);
+        this.getOne = this.getOne.bind(this);
+        this.post = this.post.bind(this);
     }
     async getAll( _: Request, res: Response) {
         try{
             const users= await this.userService.getAll();
-            return res.json(users);
+            res.json(users);
         }catch (e){
             throw e ;
         }
@@ -21,8 +25,13 @@ import {UserService} from "../services/user.service";
     }
 
 
-    post(user: any) {
-        return 'Saving user...';
+    async post(req: Request,res: Response) {
+        try{
+            // const users= await this.userService.post(req.body);
+            res.json(req.body);
+        }catch (e){
+            throw e ;
+        }
     }
 
     put() {

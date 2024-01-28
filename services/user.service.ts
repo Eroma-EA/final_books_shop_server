@@ -1,15 +1,23 @@
+import {IUser} from "../intefaces/IUser";
+import {UserModel} from "../models/user.model";
 
 export class UserService {
   async getAll() {
-    return "This action returns user #";
+   try{
+     const users:IUser[]=await UserModel.findAll()
+     return users
+   }catch (e){
+     throw e
+   }
   }
 
   async getOne() {
     return "This action returns user #";
   }
 
-  post() {
-    return "Saving user...";
+  async post(user:IUser) {
+    const newUser:IUser=await UserModel.create({email:user.email, password:user.password})
+    return newUser;
   }
 
   put() {
