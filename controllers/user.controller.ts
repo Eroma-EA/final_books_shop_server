@@ -1,31 +1,37 @@
-import 'reflect-metadata';
-import {Controller, Param, Body, Get, Post, Put, Delete, Req, Res} from 'routing-controllers';
 import {Request, Response} from "express";
+import {UserService} from "../services/user.service";
 
-@Controller()
-export class UserController {
-    @Get('/users')
-    getAll(@Req() req: Request, @Res() res: Response) {
-        return res.json("hello");
+ class UserController {
+     private userService;
+
+    constructor() {
+        this.userService = new UserService();
+    }
+    async getAll( _: Request, res: Response) {
+        try{
+            const users= await this.userService.getAll();
+            return res.json(users);
+        }catch (e){
+            throw e ;
+        }
     }
 
-    @Get('/users/:id')
-    getOne(@Param('id') id: number) {
-        return 'This action returns user #' + id;
+    async getOne( ) {
+        return 'This action returns user #';
     }
 
-    @Post('/users')
-    post(@Body() user: any) {
+
+    post(user: any) {
         return 'Saving user...';
     }
 
-    @Put('/users/:id')
-    put(@Param('id') id: number, @Body() user: any) {
+    put() {
         return 'Updating a user...';
     }
 
-    @Delete('/users/:id')
-    remove(@Param('id') id: number) {
+    remove() {
         return 'Removing user...';
     }
 }
+
+export default UserController;
