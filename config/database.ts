@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { sequelizeConfig, dialect } from "./config";
 import {UserModel} from "../models/user.model";
+import {PostModel} from "../models/post.model";
 
 class Database {
     public sequelize: Sequelize;
@@ -18,13 +19,14 @@ class Database {
                 acquire: sequelizeConfig.options.pool.acquire,
                 idle: sequelizeConfig.options.pool.idle,
             },
-            models: [UserModel],
+            models: [UserModel, PostModel],
         });
     }
 
     public async connectToDatabase(): Promise<void> {
         try {
             await this.sequelize.authenticate();
+            await this.sequelize.sync({force:true})
             console.log("Connection has been established successfully.");
         } catch (err) {
             console.error("Unable to connect to the Database:", err);

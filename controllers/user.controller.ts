@@ -13,10 +13,10 @@ import {IUser} from "../intefaces/IUser";
     }
     async getAll( _: Request, res: Response) {
         try{
-            const users= await this.userService.getAll();
+            const users = await this.userService.getAll();
             res.json(users);
         }catch (e){
-            throw e ;
+            throw e;
         }
     }
 
@@ -27,8 +27,8 @@ import {IUser} from "../intefaces/IUser";
 
     async post(req: Request,res: Response) {
         try{
-            // const users= await this.userService.post(req.body);
-            res.json(req.body);
+            const users:IUser= await this.userService.post(req.body);
+            res.json(users);
         }catch (e){
             throw e ;
         }

@@ -1,12 +1,11 @@
 import {
-    BelongsToMany,
     Column,
-    DataType,
-    HasMany,
+    DataType, HasMany,
     Model,
     Table,
 } from "sequelize-typescript";
 import {IUser} from "../intefaces/IUser";
+import {PostModel} from "./post.model";
 
 interface UserCreationAttrs {
     email: string;
@@ -36,9 +35,6 @@ export class UserModel extends Model <IUser, UserCreationAttrs>{
     @Column({ type: DataType.STRING, allowNull: true, field:"banReason" })
     banReason?: string;
 
-    // @BelongsToMany(() => Role, () => UserRoles)
-    // roles: Role[];
-    //
-    // @HasMany(() => Post)
-    // posts: Post[];
+    @HasMany(() => PostModel)
+    posts!: PostModel[];
 }
