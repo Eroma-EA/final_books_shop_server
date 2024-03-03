@@ -1,6 +1,5 @@
-
 import {Request, Response} from "express";
-import {PostService} from "../services/post.service";
+import { PostService } from "../services/post.service";
 import {IPost} from "../intefaces/IPost";
 
 class PostController{
@@ -21,14 +20,20 @@ class PostController{
         }
     }
 
-    async getOne( ) {
-        return 'This action returns user #';
+    async getOne(req: Request, res: Response) {
+        try{
+            const post:IPost|null = await this.postService.getOne(+req.params.id);
+            res.json(post);
+        }catch (e){
+            throw e
+        }
     }
 
 
     async post(req: Request,res: Response) {
         try{
-            const post:IPost= await this.postService.post(req.body);
+          
+            const post:IPost= await this.postService.post(req.body, req.files?.image as any) 
             res.json(post);
         }catch (e){
             throw e ;

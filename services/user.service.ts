@@ -11,12 +11,15 @@ export class UserService {
    }
   }
 
-  async getOne() {
-    return "This action returns user #";
+  async getOne(user:IUser) {
+    const getUser:IUser | null = await UserModel.findOne({where:{email:user.email}})
+    console.log(getUser);
+    
+    return getUser;
   }
 
   async post(user:IUser) {
-    const newUser:IUser=await UserModel.create({email:user.email, password:user.password})
+    const newUser:IUser = await UserModel.create({email:user.email, password:user.password})
     return newUser;
   }
 

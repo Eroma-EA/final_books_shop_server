@@ -1,5 +1,6 @@
 import {PostModel} from "../models/post.model";
 import {IPost} from "../intefaces/IPost";
+import { FileService } from "./file.service";
 
 
 export class PostService{
@@ -12,19 +13,27 @@ export class PostService{
         }
     }
 
-    async getOne() {
-        return "This action returns user #";
+    async getOne(id: number) {
+        try{
+            const post:IPost|null = await PostModel.findByPk(id)
+            return post
+        }catch (e){
+            throw new Error("Post not found")
+        }
     }
 
-    async post(post:IPost) {
-        const newPost:IPost=await PostModel.create({
-            title: post.title,
-            content: post.content,
-            userId: post.userId,
-            image:post.image
-        })
+
+    async post(postData:IPost, picture?: any) {
+        const image = picture ? await new FileService().saveFile(picture) : "";
+
+        const newPost = await PostModel.create({
+            ...postData,
+            image,
+        });
+
         return newPost;
     }
+
 
     put() {
         return "Updating a user...";

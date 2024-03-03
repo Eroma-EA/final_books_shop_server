@@ -20,8 +20,14 @@ import {IUser} from "../intefaces/IUser";
         }
     }
 
-    async getOne( ) {
-        return 'This action returns user #';
+    async getOne(req: Request, res: Response) {
+        try{
+            const users = await this.userService.getOne(req.body);
+            res.json(users);
+        }catch (e){
+            throw e;
+        }
+        
     }
 
 

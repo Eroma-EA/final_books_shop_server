@@ -12,7 +12,7 @@ interface PostCreationAttrs {
     title: string;
     content: string;
     userId: number;
-    image: string;
+    image?: string;
 }
 
 @Table({ tableName: "posts" })
@@ -33,7 +33,7 @@ export class PostModel extends Model<IPost, PostCreationAttrs> {
     content!: string;
 
     @Column({ type: DataType.STRING, allowNull: false, field:"image" })
-    image!: string;
+    image?: string;
 
     @ForeignKey(() => UserModel)
     @Column({ type: DataType.INTEGER })

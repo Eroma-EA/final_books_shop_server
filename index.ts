@@ -2,15 +2,16 @@ import express from "express"
 import * as dotenv from "dotenv";
 import database from "./config/database";
 import router from "./router";
+import fileUpload = require("express-fileupload");
 dotenv.config();
 
 
 const port=process.env.PORT
 const app = express()
-
+app.use("/api/public/posts", express.static("photo"));
+app.use(fileUpload({ createParentPath: true }));
 app.use(express.json())
 app.use("/api", router)
-
 
 database.connectToDatabase()
     .then(() => {
